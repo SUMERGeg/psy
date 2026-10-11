@@ -1,0 +1,4 @@
+.light { position: absolute; inset: -24px; pointer-events: none; transform: translate(var(--light-x, 0px), var(--light-y, 0px)); transition: transform 420ms var(--ease-calm); }
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .light { transform: none; transition: none; }
+}

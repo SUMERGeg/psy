@@ -1,0 +1,103 @@
+.container {
+  width: min(calc(100% - 2 * var(--page-gutter)), var(--container-width));
+  margin-inline: auto;
+}
+.section { padding-block: var(--space-section); }
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  min-height: var(--control-height);
+  max-width: 100%;
+  padding: 0.5rem 0.625rem 0.5rem var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  font-size: var(--text-small);
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  text-align: center;
+  overflow-wrap: anywhere;
+  transition: background-color var(--duration-fast) var(--ease-calm), color var(--duration-fast) var(--ease-calm), border-color var(--duration-fast) var(--ease-calm), transform var(--duration-fast) var(--ease-calm), box-shadow var(--duration-fast) var(--ease-calm);
+}
+.primary { background: var(--color-primary); color: var(--color-on-accent); }
+.secondary { border-color: var(--color-control-border); color: var(--color-ink); }
+.arrowCircle { position: relative; display: inline-flex; flex: 0 0 2.75rem; width: 2.75rem; height: 2.75rem; overflow: hidden; border: 1px solid var(--color-control-border); border-radius: 50%; color: var(--color-primary); font-size: 1.25rem; line-height: 1; transition: background-color 320ms var(--ease-calm), color 320ms var(--ease-calm), transform 220ms var(--ease-calm); }
+.arrowGlyph, .arrowEcho { position: absolute; inset: 0; display: grid; place-items: center; transition: transform 420ms var(--ease-calm); }
+.arrowEcho { transform: translateX(-150%); }
+.arrowCircle[data-direction='diagonal'] .arrowEcho { transform: translate(-150%, 150%); }
+.button .arrowCircle { flex-basis: 2.25rem; width: 2.25rem; height: 2.25rem; border: 0; background: var(--color-on-accent); color: var(--color-primary); }
+.secondary .arrowCircle { background: var(--color-primary); color: var(--color-on-accent); }
+:is(.button, [data-motion-link]):focus-visible .arrowGlyph { transform: translateX(150%); }
+:is(.button, [data-motion-link]):focus-visible .arrowCircle[data-direction='diagonal'] .arrowGlyph { transform: translate(150%, -150%); }
+:is(.button, [data-motion-link]):focus-visible .arrowEcho { transform: translate(0, 0); }
+[data-motion-link]:focus-visible .arrowCircle { background: var(--color-primary); color: var(--color-on-accent); }
+:is(.button, [data-motion-link]):active .arrowCircle { transform: scale(0.9); }
+.textLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  gap: var(--space-3);
+  max-width: 100%;
+  color: var(--color-wine);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color var(--duration-fast) var(--ease-calm);
+}
+.textLink::after { content: ''; position: absolute; bottom: 6px; left: 0; width: 100%; height: 1px; background: currentColor; transform: scaleX(0.55); transform-origin: left; opacity: 0.6; transition: transform var(--duration-fast) var(--ease-calm), opacity var(--duration-fast) var(--ease-calm); }
+.textLink:focus-visible::after { transform: scaleX(1); opacity: 1; }
+.textLink > span[aria-hidden='true'] { transition: transform var(--duration-fast) var(--ease-calm); }
+.textLink:focus-visible > span[aria-hidden='true'] { transform: translateX(6px); }
+.button:active { transform: translateY(1px); }
+.copyProfile { position: relative; width: min(100%, 24rem); max-width: 100%; padding-bottom: 4rem; }
+.copyRow { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); align-items: center; }
+.handle { user-select: text; font-size: var(--text-small); }
+.copyButton { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 2.75rem; padding: 0; border: 0; background: transparent; color: var(--color-wine); cursor: pointer; font-size: var(--text-small); text-decoration: underline; text-underline-offset: 4px; transition: color var(--duration-fast) var(--ease-calm), transform var(--duration-fast) var(--ease-calm); }
+.copyButton:active { transform: translateY(1px); }
+.copyButton:disabled { cursor: wait; }
+.copyIcon { position: relative; display: inline-flex; width: 18px; height: 18px; }
+.copyIcon svg { position: absolute; inset: 0; transition: opacity 200ms ease, transform 300ms var(--ease-calm); }
+.copyCheck { opacity: 0; transform: translateY(5px) scale(0.8); }
+.copyProfile:is([data-state='copied'], [data-state='leaving']) .copySheets { opacity: 0; transform: translateY(-5px) scale(0.8); }
+.copyProfile:is([data-state='copied'], [data-state='leaving']) .copyCheck { opacity: 1; transform: none; }
+.copyStatus { position: absolute; top: calc(100% - 3.5rem); left: 0; display: flex; align-items: center; gap: 0.625rem; width: max-content; max-width: min(28rem, 100%); min-height: 2.75rem; padding: 0.75rem 0.875rem; border-radius: 0.75rem; background: var(--color-primary); color: var(--color-on-accent); box-shadow: 0 6px 14px rgb(38 58 49 / 12%); font-size: var(--text-small); line-height: 1.4; opacity: 0; visibility: hidden; transform: translateY(12px) scale(0.97); transform-origin: top left; transition: opacity 240ms ease, transform 360ms var(--ease-calm), visibility 0s linear 240ms; pointer-events: none; }
+.copyProfile[data-state='copied'] .copyStatus { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.statusCheck { flex-shrink: 0; }
+.copyProfile[data-state='copied'] .statusCheck path { stroke-dasharray: 1; animation: drawCheck 420ms 100ms var(--ease-calm) both; }
+.copyProfile[data-state='error'] { padding-bottom: 0; }
+.copyProfile[data-state='error'] .copyStatus { position: relative; top: auto; margin-top: var(--space-2); background: var(--color-surface); border: 1px solid var(--color-wine); color: var(--color-wine); opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+@keyframes drawCheck { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .button, .copyButton:active, .arrowCircle, .arrowGlyph, .textLink > span[aria-hidden='true'], .copyStatus, .copyIcon svg { transform: none !important; }
+  .arrowEcho { display: none; }
+}
+.accordion details { border-bottom: var(--border-hairline); scroll-margin-top: var(--space-6); }
+.accordion summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); min-height: var(--control-height); padding-block: var(--space-5); cursor: pointer; list-style: none; font-weight: 500; }
+.accordion summary::-webkit-details-marker { display: none; }
+.disclosureIcon { position: relative; flex: 0 0 1rem; height: 1rem; color: var(--color-wine); }
+.disclosureIcon::before, .disclosureIcon::after { position: absolute; content: ''; width: 1rem; height: 1px; background: currentColor; inset: 50% auto auto 0; }
+.disclosureIcon::after { transform: rotate(90deg); }
+.accordion details[open] .disclosureIcon::after { transform: rotate(0); }
+.answer { padding-bottom: var(--space-6); max-width: var(--measure); overflow-wrap: anywhere; }
+.answer p + p { margin-top: var(--space-4); }
+@media (hover: hover) {
+  .button:hover { transform: translateY(-4px); box-shadow: 0 10px 22px rgb(38 58 49 / 16%); }
+  .button:active { transform: translateY(1px) scale(0.98); box-shadow: none; }
+  .primary:hover { background: var(--color-primary-hover); }
+  .secondary:hover { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-paper); }
+  .secondary:hover .arrowCircle { background: var(--color-on-accent); color: var(--color-primary); }
+  .textLink:hover { color: var(--color-wine-hover); }
+  .textLink:hover::after { transform: scaleX(1); opacity: 1; }
+  .textLink:hover > span[aria-hidden='true'] { transform: translateX(6px); }
+  :is(.button, [data-motion-link]):hover .arrowGlyph { transform: translateX(150%); }
+  :is(.button, [data-motion-link]):hover .arrowCircle[data-direction='diagonal'] .arrowGlyph { transform: translate(150%, -150%); }
+  :is(.button, [data-motion-link]):hover .arrowEcho { transform: translate(0, 0); }
+  [data-motion-link]:hover .arrowCircle { background: var(--color-primary); color: var(--color-on-accent); }
+  .copyButton:hover { color: var(--color-wine-hover); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .button { transition-duration: 280ms; }
+  .button:active { transform: translateY(1px) scale(0.98); }
+}

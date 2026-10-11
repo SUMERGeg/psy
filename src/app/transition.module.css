@@ -1,0 +1,6 @@
+.frame { display: flex; flex: 1; flex-direction: column; }
+@media (prefers-reduced-motion: no-preference) {
+  .frame { animation: pageArrival 650ms var(--ease-calm); }
+  .frame[data-native-arrival] { animation: none; }
+}
+@keyframes pageArrival { from { opacity: 0.2; } to { opacity: 1; } }

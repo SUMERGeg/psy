@@ -1,0 +1,11 @@
+import './site-config.test.mjs';
+import './content.test.mjs';
+import './publication.test.mjs';
+import './interior.test.mjs';
+import './accordion.test.mjs';
+import './interactions.test.mjs';
+import './editorial.test.mjs';
+import './conversation.test.mjs';
+import './page-motion.test.mjs';
+import './reading-time.test.mjs';
+import './base-path.test.mjs';
