@@ -7,6 +7,7 @@ export default defineConfig([
   ...nextTypeScript,
   globalIgnores([
     '.next/**',
+    '.next-pages/**',
     'node_modules/**',
     '.cache/**',
     'out/**',

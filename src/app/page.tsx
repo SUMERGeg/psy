@@ -1,6 +1,8 @@
 import styles from './page.module.css';
 import Link from 'next/link';
 import { getReadingTimeLabel } from '@/lib/reading-time';
+import { getContactAction } from '@/lib/contact-action';
+import { TextLink } from '@/components/ui/TextLink';
 import { siteContent } from '@/content/site';
 import { getVisibleSiteContent } from '@/content/validation';
 import { getSiteConfig } from '@/lib/site-config';
@@ -27,6 +29,8 @@ export default function HomePage() {
   const notes = notesPage?.blocks.filter((block) => !['intro', 'reflection'].includes(block.id)) ?? [];
   const portrait = content.assets.find((asset) => asset.id === 'A01');
   const titleLines = hero?.title.split(' и ') ?? [];
+  const contactAction = getContactAction(content.contacts);
+  const sessions = content.pages.find((page) => page.id === 'sessions');
   const topicPreviews = Object.fromEntries(content.pages.filter((page) => ['relationships', 'self-esteem'].includes(page.id)).map((page) => [page.id, page.metadata.description]));
 
   return <main id="main-content" className={styles.page} tabIndex={-1}>
@@ -34,17 +38,18 @@ export default function HomePage() {
       <div className={styles.lighting}><ReactiveLight><WindowLight /></ReactiveLight></div>
       <Container className={styles.heroInner}>
         <div className={styles.heroCopy}>
+          <p className={styles.heroLabel}>{content.specialist.name} · {content.specialist.role}</p>
           <h1 id="page-title" className={styles.title}>
             {titleLines.map((line, index) => <span key={line}>{index > 0 ? 'и ' : ''}{line}{index < titleLines.length - 1 ? ' ' : ''}</span>)}
           </h1>
           <div className={styles.lead}>{hero.body.map((line, index) => <p key={index}>{line}</p>)}</div>
           <div className={styles.heroActions}>
-            {content.contacts.instagramUrl && <ButtonLink href={content.contacts.instagramUrl} className={styles.action}>
-              Открыть Instagram <RoundArrow direction="diagonal" />
+            {contactAction && <ButtonLink href={contactAction.href} className={styles.action}>
+              {contactAction.label} <RoundArrow direction="diagonal" />
             </ButtonLink>}
-            {introduction && <ButtonLink href="#about" variant="secondary" className={styles.action}>
-              Обо мне <RoundArrow />
-            </ButtonLink>}
+            {(sessions || introduction) && <TextLink href={sessions?.path ?? '#about'} className={styles.heroSecondary}>
+              {sessions ? 'О консультациях' : 'Обо мне'} <span aria-hidden="true">→</span>
+            </TextLink>}
           </div>
         </div>
         {portrait && <div className={styles.scene}>

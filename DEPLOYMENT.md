@@ -17,6 +17,7 @@ $env:GITHUB_PAGES='true'
 $env:SITE_MODE='preview'
 $env:SITE_URL='https://SUMERGeg.github.io'
 npm run build
+node --experimental-strip-types scripts/prepare-pages-export.mjs
 node scripts/check-pages-export.mjs
 ```
 

@@ -11,6 +11,12 @@ for (const route of routes) {
   assert.match(html, /name="robots" content="noindex, nofollow"/);
   assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
   assert.ok(html.includes('href="/psy/sessions/"'));
+  assert.ok(html.includes('Написать в Instagram'));
+  if (route === 'sessions') {
+    assert.doesNotMatch(html, /50 минут|Онлайн, индивидуально|24 часа|4\s*000/);
+    assert.ok(html.includes('Что уточнить перед встречей'));
+  }
+  if (route === 'about') assert.doesNotMatch(html, /Практика и обучение|7 лет практики|Супервизор, ОИПП/);
   for (const match of html.matchAll(/(?:href|src)="([^"<>]+)"/g)) {
     const url = match[1];
     if (!url.startsWith('/') || url.startsWith('//')) continue;
@@ -22,4 +28,5 @@ for (const route of routes) {
   }
 }
 await stat(join(exportDirectory, '404.html'));
+await assert.rejects(stat(join(exportDirectory, 'faq', 'index.html')), { code: 'ENOENT' });
 console.log(`Pages export passed: ${routes.length} routes, ${checked} local links/assets, noindex and 404.`);

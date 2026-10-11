@@ -160,8 +160,8 @@ export function ConversationBuilder({ content, instagramUrl }: { content: Conver
             <p className={styles.reviewHint}>Фраза — только отправная точка. Оставьте в ней то, что звучит по-вашему.</p>
           </div>}
           <div className={styles.stageActions}>
-            {step > 1 && <button type="button" className={styles.quietButton} onClick={() => goToStep(step - 1)}>← Назад</button>}
             {step < 3 && <button type="button" className={`${ui.button} ${ui.primary}`} disabled={!enhanced || (step === 1 ? !direction : !selected.length)} onClick={() => goToStep(step + 1)}>{step === 1 ? 'Выбрать мысли' : 'Собрать фразу'}<RoundArrow /></button>}
+            {step > 1 && <button type="button" className={styles.quietButton} onClick={() => goToStep(step - 1)}>← Назад</button>}
             {direction && <button type="button" className={styles.quietButton} onClick={reset}>Начать заново</button>}
           </div>
         </div>
@@ -182,7 +182,7 @@ export function ConversationBuilder({ content, instagramUrl }: { content: Conver
           {edited !== null && <p className={styles.editNote}>Ваши правки сохраняются при переходе между шагами.</p>}
           <div className={styles.resultActions}>
             <button type="button" className={`${ui.button} ${ui.primary}`} onClick={copy} disabled={!message.trim() || copyState === 'copying'}>Скопировать фразу<RoundArrow /></button>
-            {instagramUrl && <ButtonLink href={instagramUrl} variant="secondary">К профилю Анны<RoundArrow direction="diagonal" /></ButtonLink>}
+            {instagramUrl && <ButtonLink href={instagramUrl} variant="secondary">Открыть Instagram<RoundArrow direction="diagonal" /></ButtonLink>}
           </div>
           <div role="status" aria-atomic="true" className={styles.copyFeedback} data-state={copyState}>
             {(copyState === 'copied' || copyState === 'leaving') && <span>✓ Фраза скопирована</span>}

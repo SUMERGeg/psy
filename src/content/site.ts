@@ -8,6 +8,7 @@ const draft = 'docs/project/psychologist-content-draft.md';
 const profile = `${source}#2; S01/S02 (2026-10-07)`;
 const demoCopy = 'docs/design/content-details.md#тексты; демонстрационная редакционная проза';
 const demoConditions = 'docs/design/consultation-demo.md; временные примеры по запросу пользователя (2026-10-09)';
+const productCopy = 'docs/design/product-polish.md; UX-редактура по заданию пользователя (2026-10-11), не описание методики или правил специалиста';
 const instagramUrl = 'https://www.instagram.com/anna_feell/';
 const known = <T>(value: T, evidence: string): Fact<T> => ({ value, confirmed: true, source: evidence });
 const unknown = <T>(section: string): Fact<T> => ({ value: null, confirmed: false, source: `${source}#${section}` });
@@ -21,7 +22,7 @@ const pages: PageContent[] = [
       description: 'Анна Филиппова, психолог. Основные темы профиля — отношения и самооценка.', source: profile,
     },
     blocks: [
-      { id: 'hero', status: 'DEMO', required: true, title: 'Отношения и самооценка', body: ['Когда хочется лучше понимать себя, быть ближе к другим и не терять собственный голос.'], source: `${profile}; docs/design/approved/README.md; ${demoCopy}`, factKeys: ['specialist.name', 'specialist.role'] },
+      { id: 'hero', status: 'DEMO', required: true, title: 'Отношения и самооценка', body: ['Когда трудно говорить о своих желаниях, отстаивать границы или перестать сравнивать себя с другими. Начать разговор можно с того, что волнует вас сейчас.'], source: `${profile}; ${productCopy}`, factKeys: ['specialist.name', 'specialist.role'] },
       { id: 'topics', status: 'DEMO', required: false, title: 'Темы для разговора', body: ['Иногда за привычной ситуацией стоит вопрос, которому хочется уделить больше внимания.'], source: `${source}#5; S01/S02; ${demoCopy}`, factKeys: [] },
       { id: 'introduction', status: 'DEMO', required: false, title: 'Знакомство', body: ['Меня зовут Анна Филиппова. Я психолог.', 'Здесь — об отношениях с другими и с собой. О том, как замечать свои желания, говорить о важном и оставлять место несовершенству.'], source: `${profile}; ${draft}#3; ${demoCopy}`, factKeys: ['specialist.name', 'specialist.role'] },
       { id: 'instagram', status: 'DEMO', required: false, title: 'Больше обо мне', body: [], source: `${source}#3`, factKeys: ['contacts.instagramUrl'] },
@@ -50,8 +51,12 @@ const pages: PageContent[] = [
   },
   {
     id: 'sessions', path: '/sessions', enabled: true,
-    metadata: { status: 'DEMO', title: 'Консультации — Анна Филиппова', description: 'Индивидуальные онлайн-консультации: формат, продолжительность, стоимость и запись.', source: demoConditions },
-    blocks: [{ id: 'conditions', status: 'DEMO', required: true, title: 'Место для\nвашего разговора.', body: ['Не обязательно заранее подбирать точные слова. Начать можно с того, что сейчас занимает ваши мысли.'], source: demoConditions, factKeys: ['consultations.format', 'consultations.durationMinutes', 'consultations.price'] }],
+    metadata: { status: 'DEMO', title: 'Консультации — Анна Филиппова', description: 'Как обратиться к Анне Филипповой и какие вопросы уточнить перед первой консультацией.', source: `${profile}; ${productCopy}` },
+    blocks: [
+      { id: 'conditions', status: 'DEMO', required: true, title: 'Начать\nс разговора.', body: ['Первый шаг — написать Анне в Instagram. Можно коротко обозначить свой вопрос и уточнить условия встречи.'], source: `${source}#0; ${productCopy}`, factKeys: ['contacts.instagramUrl'] },
+      { id: 'first-contact', status: 'DEMO', required: false, title: 'Первое сообщение', body: ['Расскажите в нескольких предложениях, о чём хотелось бы поговорить. Подробную личную историю в первом сообщении писать необязательно.', 'Если пока трудно подобрать слова, на главной можно собрать черновик сообщения — он останется только у вас.'], source: productCopy, factKeys: [] },
+      { id: 'before-meeting', status: 'DEMO', required: false, title: 'Что уточнить перед встречей', body: ['В каком формате проходит консультация и сколько она длится.', 'Какова стоимость и как договориться о времени.', 'Какие действуют правила переноса и отмены.', 'Как проходит первая встреча и нужно ли к ней готовиться.'], source: productCopy, factKeys: [] },
+    ],
   },
   {
     id: 'faq', path: '/faq', enabled: false,

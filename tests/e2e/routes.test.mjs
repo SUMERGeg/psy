@@ -55,9 +55,10 @@ for (const [path, expectedStatus, title] of [
         }
       }
       if (path === '/sessions') {
-        assert.ok(html.includes('50 минут'));
-        assert.ok(html.includes('Онлайн, индивидуально'));
-        assert.ok(html.includes('Записаться'));
+        assert.doesNotMatch(html, /50 минут|Онлайн, индивидуально|24 часа|4\s*000/);
+        assert.ok(html.includes('Первое сообщение'));
+        assert.ok(html.includes('Что уточнить перед встречей'));
+        assert.ok(html.includes('Написать в Instagram'));
       }
     }
   });

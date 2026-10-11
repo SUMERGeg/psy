@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import type { NavigationItem } from '@/content/navigation';
 import styles from './layout.module.css';
 import { withoutBasePath } from '@/lib/base-path';
+import { getContactAction } from '@/lib/contact-action';
 
 const subscribe = () => () => {};
 const clientSnapshot = () => true;
@@ -23,8 +24,9 @@ export function MobileMenu({ items, bookingUrl, instagramUrl }: {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const scrollLock = useRef<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const contactUrl = bookingUrl ?? instagramUrl;
-  const contactLabel = bookingUrl ? 'Записаться' : 'Instagram';
+  const contact = getContactAction({ bookingUrl, instagramUrl });
+  const contactUrl = contact?.href;
+  const contactLabel = contact?.label;
 
   const restoreScroll = () => {
     if (scrollLock.current !== null) {
@@ -91,12 +93,16 @@ export function MobileMenu({ items, bookingUrl, instagramUrl }: {
         aria-current={pathname === item.href ? 'page' : undefined}>{item.label}</Link>)}
       {contactUrl && <a href={contactUrl} className={styles.headerContact}>{contactLabel}<span aria-hidden="true">↗</span></a>}
     </nav>
-    {enhanced && <>
       <button id="mobile-menu-trigger" ref={triggerRef} type="button" className={styles.menuTrigger}
+        disabled={!enhanced}
         data-open={isOpen}
         aria-label="Открыть меню" aria-expanded={isOpen} aria-controls="mobile-navigation" aria-haspopup="dialog" onClick={openMenu}>
         <span>Меню</span><span className={styles.menuIcon} aria-hidden="true"><i /><i /></span>
       </button>
+    <noscript><nav aria-label="Навигация без JavaScript" className={styles.fallbackNav}>
+      {items.map(item => <Link key={item.href} href={item.href}>{item.label}</Link>)}
+    </nav></noscript>
+    {enhanced && <>
       <dialog id="mobile-navigation" ref={dialogRef} className={styles.dialog} data-closing={isClosing} aria-label="Навигация по сайту" onClose={onClosed} onKeyDown={containFocus}
         onCancel={(event) => { event.preventDefault(); closeMenu(); }}>
         <div className={styles.dialogHeader}>

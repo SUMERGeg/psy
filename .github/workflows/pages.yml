@@ -30,6 +30,7 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - run: node --experimental-strip-types scripts/prepare-pages-export.mjs
       - run: node scripts/check-pages-export.mjs
       - uses: actions/upload-pages-artifact@v4
         with:

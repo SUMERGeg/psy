@@ -9,3 +9,4 @@ import './conversation.test.mjs';
 import './page-motion.test.mjs';
 import './reading-time.test.mjs';
 import './base-path.test.mjs';
+import './contact-action.test.mjs';

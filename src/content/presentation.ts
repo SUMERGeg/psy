@@ -1,4 +1,20 @@
-import type { FAQItem, VisibleSiteContent } from './types';
+import type { ConsultationFacts, FAQItem, Specialist, VisibleSiteContent } from './types';
+
+export function getProfessionalRows(specialist: Specialist) {
+  return ([['method', 'Подход'], ['practiceExperience', 'Опыт практики'], ['supervision', 'Супервизия']] as const)
+    .flatMap(([key, label]) => specialist[key].confirmed && specialist[key].value
+      ? [{ id: key, label, value: specialist[key].value }] : []);
+}
+
+export function getConfirmedSessionRows(facts: ConsultationFacts) {
+  return getSessionRows({
+    format: facts.format.confirmed ? facts.format.value : null,
+    durationMinutes: facts.durationMinutes.confirmed ? facts.durationMinutes.value : null,
+    price: facts.price.confirmed ? facts.price.value : null,
+    frequency: facts.frequency.confirmed ? facts.frequency.value : null,
+    cancellationPolicy: facts.cancellationPolicy.confirmed ? facts.cancellationPolicy.value : null,
+  });
+}
 
 export const faqGroups: { id: FAQItem['group']; title: string }[] = [
   { id: 'before', title: 'Перед первой встречей' },

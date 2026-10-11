@@ -4,6 +4,8 @@ import { InteriorPage } from '@/components/layout/InteriorPage';
 import { ResponsiveImage } from '@/components/media/ResponsiveImage';
 import { CTA } from '@/components/content/CTA';
 import { TextLink } from '@/components/ui/TextLink';
+import { ProfessionalDetails } from '@/components/content/ProfessionalDetails';
+import { siteContent } from '@/content/site';
 import styles from '@/components/layout/interior.module.css';
 
 export function generateMetadata() { return getPageMetadata('about'); }
@@ -30,15 +32,17 @@ export default function AboutPage() {
         <ResponsiveImage assetId="A01" className={styles.portrait} />
       </div>}
     </div>
-    {content.education.length > 0 && <section className={styles.topicSection} aria-labelledby="education-heading">
-      <h2 id="education-heading">Образование</h2>
-      <ul className={styles.education}>{content.education.map((item) => <li key={item.id}>
-        <h3>{item.title}</h3>{item.organization && <p>{item.organization}</p>}{item.year && <p>{item.year}</p>}{item.note && <p>{item.note}</p>}
+    {content.topics.length > 0 && <section data-reveal className={styles.topicSection} aria-labelledby="focus-heading">
+      <h2 id="focus-heading">Основные темы</h2>
+      <ul className={styles.focusList}>{content.topics.map(topic => <li key={topic.slug}>
+        <h3>{topic.title}</h3><p>{topic.description}</p>
+        <TextLink href={`/topics#topic-${topic.slug}`}>Подробнее о теме <span aria-hidden="true">→</span></TextLink>
       </li>)}</ul>
     </section>}
+    <ProfessionalDetails specialist={siteContent.specialist} education={content.education} />
     <div data-reveal className={styles.closing}>
-      <CTA title="Больше обо мне" {...content.contacts} />
-      {content.pages.some((page) => page.id === 'topics') && <TextLink href="/topics">Темы для разговора →</TextLink>}
+      <CTA title="Начать разговор" {...content.contacts} />
+      {content.pages.some((page) => page.id === 'sessions') && <TextLink href="/sessions">О консультациях →</TextLink>}
     </div>
   </InteriorPage>;
 }

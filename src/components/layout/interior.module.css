@@ -3,7 +3,7 @@
 .back a { font-size: var(--text-small); }
 .heading { padding-block: var(--space-7) var(--space-8); max-width: 56rem; }
 .label { color: var(--color-muted); font-size: var(--text-small); margin-bottom: var(--space-4); }
-.heading h1 { font-weight: 500; }
+.heading h1 { font-weight: 500; white-space: pre-line; }
 .lead { margin-top: var(--space-5); max-width: var(--measure); font-size: var(--text-lead); }
 .split { display: grid; border-top: var(--border-hairline); gap: var(--space-7); padding-top: var(--space-7); }
 .section { max-width: var(--measure); }
@@ -32,6 +32,25 @@
 .fact dd { margin: 0; overflow-wrap: anywhere; }
 .education { list-style: none; padding: 0; }
 .education li { border-bottom: var(--border-hairline); padding-block: var(--space-5); }
+.focusList { display: grid; gap: var(--space-6); list-style: none; margin: 0; padding: 0; }
+.focusList li { min-width: 0; padding-top: var(--space-5); border-top: var(--border-hairline); }
+.focusList h3 { font-family: var(--font-serif); font-size: 2rem; font-weight: 500; line-height: 1.15; }
+.focusList p { margin-block: var(--space-4); max-width: var(--measure); }
+.sessionContact { padding-bottom: var(--space-6); }
+.sessionContact > div { margin-top: 0; }
+.sessionPreparation { display: grid; gap: var(--space-7); padding-top: var(--space-7); border-top: var(--border-hairline); }
+.preparationSection { min-width: 0; }
+.sectionNumber { color: var(--color-wine); font-size: var(--text-small); font-variant-numeric: tabular-nums; margin-bottom: var(--space-3); }
+.preparationSection h2 { font-size: clamp(2.125rem, 3.6vw, 3rem); margin-bottom: var(--space-5); }
+.preparationSection > p:not(.sectionNumber) { max-width: var(--measure); }
+.preparationSection > p + p { margin-top: var(--space-4); }
+.preparationSection > a { margin-top: var(--space-4); }
+.preparationList { list-style: none; padding: 0; margin: 0; }
+.preparationList li { padding-block: var(--space-4); border-bottom: var(--border-hairline); }
+.preparationList li:first-child { padding-top: 0; }
+@media (min-width: 48rem) {
+  .focusList, .sessionPreparation { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--grid-gap); }
+}
 @media (min-width: 48rem) {
   .everydaySection { padding: var(--space-7); }
   .heading { padding-block: var(--space-8); }
