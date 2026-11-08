@@ -25,7 +25,7 @@ test('current demonstration exposes known profile data without unfinished pages 
 test('home uses one preview portrait and consultation examples remain unconfirmed', () => {
   const view = getVisibleSiteContent(siteContent, 'preview', null);
   const home = view.pages.find((page) => page.id === 'home');
-  assert.equal(home.blocks.find((block) => block.id === 'hero').title, 'Отношения и самооценка');
+  assert.equal(home.blocks.find((block) => block.id === 'hero').title, 'Консультации и супервизия');
   assert.ok(home.blocks.find((block) => block.id === 'introduction'));
   assert.deepEqual(siteContent.usedAssetIds, ['A01']);
   assert.equal(view.consultations.durationMinutes, 50);
